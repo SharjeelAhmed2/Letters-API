@@ -34,4 +34,7 @@ public class LoveLetterService {
     public List<LoveLetter> getByMood(String mood) {
         return repository.findByMood(mood);
     }
+    public void delete(UUID id) {
+        repository.deleteById(id);
+    }
 }

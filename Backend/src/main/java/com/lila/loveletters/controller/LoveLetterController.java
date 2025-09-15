@@ -38,5 +38,9 @@ public class LoveLetterController {
     public ResponseEntity<List<LoveLetter>> getByMood(@PathVariable String mood) {
         return ResponseEntity.ok(service.getByMood(mood));
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
