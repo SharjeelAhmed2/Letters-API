@@ -22,4 +22,8 @@ public class LoveLetterService {
         letter.setCreatedAt(LocalDateTime.now());
         return repository.save(letter);
     }
+    public List<LoveLetter> getAll() {
+        return repository.findAll();
+    }
+
 }

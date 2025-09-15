@@ -22,4 +22,10 @@ public class LoveLetterController {
     public ResponseEntity<LoveLetter> create(@RequestBody LoveLetter letter) {
         return ResponseEntity.ok(service.save(letter));
     }
+
+    @GetMapping
+    public ResponseEntity<List<LoveLetter>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
 }
