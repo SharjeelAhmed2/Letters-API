@@ -31,5 +31,7 @@ public class LoveLetterService {
                 : Optional.of(all.get((int) (Math.random() * all.size())));
     }
 
-
+    public List<LoveLetter> getByMood(String mood) {
+        return repository.findByMood(mood);
+    }
 }

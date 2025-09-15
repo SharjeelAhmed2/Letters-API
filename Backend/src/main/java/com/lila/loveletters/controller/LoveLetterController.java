@@ -34,5 +34,9 @@ public class LoveLetterController {
                 .orElse(ResponseEntity.noContent().build());
     }
 
+    @GetMapping("/mood/{mood}")
+    public ResponseEntity<List<LoveLetter>> getByMood(@PathVariable String mood) {
+        return ResponseEntity.ok(service.getByMood(mood));
+    }
 
 }
