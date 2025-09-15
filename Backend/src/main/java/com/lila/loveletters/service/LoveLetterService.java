@@ -25,5 +25,11 @@ public class LoveLetterService {
     public List<LoveLetter> getAll() {
         return repository.findAll();
     }
+    public Optional<LoveLetter> getRandom() {
+        List<LoveLetter> all = repository.findAll();
+        return all.isEmpty() ? Optional.empty()
+                : Optional.of(all.get((int) (Math.random() * all.size())));
+    }
+
 
 }

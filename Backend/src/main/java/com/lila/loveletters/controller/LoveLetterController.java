@@ -27,5 +27,12 @@ public class LoveLetterController {
     public ResponseEntity<List<LoveLetter>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
+    @GetMapping("/random")
+    public ResponseEntity<LoveLetter> getRandom() {
+        return service.getRandom()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
+    }
+
 
 }
