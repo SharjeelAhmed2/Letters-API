@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
 export default function AllLetters() {
   const [letters, setLetters] = useState([]);
   const [loading, setLoading] = useState(true);
 
+    const navigate = useNavigate();
+        const goToSubmit = async () => {
+      navigate('/post');
+    }
   useEffect(() => {
     fetch('http://localhost:8081/api/letters')
       .then((res) => res.json())
@@ -28,7 +32,15 @@ export default function AllLetters() {
   return (
     <div className="min-h-screen bg-pink-50 py-10 px-4">
       <div className="max-w-2xl mx-auto space-y-6">
-        <h2 className="text-3xl font-bold text-pink-700 text-center mb-6">💌 Letters from the Wind</h2>
+        <div className="flex flex-col items-center gap-2 mb-6">
+        <h2 className="text-3xl font-bold text-pink-700 text-center">💌 Letters from the Wind</h2>
+        <button
+        onClick={goToSubmit} // or use a prop/state toggle in parent
+        className="text-sm text-pink-600 hover:underline"
+        >
+        ← Return to Write Letter
+        </button>
+        </div>
         {letters.map((letter) => (
           <div
             key={letter.id}
