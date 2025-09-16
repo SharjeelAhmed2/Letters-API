@@ -1,0 +1,72 @@
+import { useEffect, useState } from 'react';
+
+export default function AllLetters() {
+  const [letters, setLetters] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/api/letters')
+      .then((res) => res.json())
+      .then((data) => {
+        setLetters(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching letters:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center text-pink-600 font-semibold">Loading letters... 💌</div>;
+  }
+
+  if (letters.length === 0) {
+    return <div className="min-h-screen flex items-center justify-center text-gray-500 font-medium">No letters yet 😔</div>;
+  }
+
+  return (
+    <div className="min-h-screen bg-pink-50 py-10 px-4">
+      <div className="max-w-2xl mx-auto space-y-6">
+        <h2 className="text-3xl font-bold text-pink-700 text-center mb-6">💌 Letters from the Wind</h2>
+        {letters.map((letter) => (
+          <div
+            key={letter.id}
+            className="bg-white shadow-lg rounded-xl p-5 border-l-4 border-pink-300"
+          >
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm text-gray-500 italic">
+                — {letter.author || 'Anonymous'}
+              </span>
+              <span className="text-xs bg-pink-200 text-pink-800 px-3 py-1 rounded-full capitalize">
+                {moodEmoji(letter.mood)} {letter.mood}
+              </span>
+            </div>
+
+            <p className="text-gray-800 whitespace-pre-wrap font-serif">
+              {letter.content}
+            </p>
+
+            <div className="text-right text-xs text-gray-400 mt-3">
+              {new Date(letter.createdAt).toLocaleString()}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function moodEmoji(mood) {
+  const moodMap = {
+    flirty: '💋',
+    comforting: '☁️',
+    wholesome: '🌼',
+    playful: '😏',
+    tired: '😓',
+    exhausted: '😞',
+    emotional: '🥺',
+    mixed: '😔',
+  };
+  return moodMap[mood?.toLowerCase()] || '💌';
+}
