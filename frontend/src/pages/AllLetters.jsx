@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function AllLetters() {
   const [letters, setLetters] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('all');
 
     const navigate = useNavigate();
         const goToSubmit = async () => {
@@ -20,7 +21,10 @@ export default function AllLetters() {
         setLoading(false);
       });
   }, []);
-
+      const filteredLetters = filter === 'all'
+    ? letters
+    : letters.filter(letter => letter.mood?.toLowerCase() === filter);
+    const moods = ['all', 'flirty', 'comforting', 'wholesome', 'playful', 'tired', 'exhausted', 'emotional', 'mixed'];
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center text-pink-600 font-semibold">Loading letters... 💌</div>;
   }
@@ -40,45 +44,64 @@ export default function AllLetters() {
         >
         ← Return to Write Letter
         </button>
-        </div>
-        {letters.map((letter) => (
-          <div
-            key={letter.id}
-            className="bg-white shadow-lg rounded-xl p-5 border-l-4 border-pink-300"
-          >
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-gray-500 italic">
-                — {letter.author || 'Anonymous'}
-              </span>
-              <span className="text-xs bg-pink-200 text-pink-800 px-3 py-1 rounded-full capitalize">
-                {moodEmoji(letter.mood)} {letter.mood}
-              </span>
-            </div>
-
-            <p className="text-gray-800 whitespace-pre-wrap font-serif">
-              {letter.content}
-            </p>
-
-            <div className="text-right text-xs text-gray-400 mt-3">
-              {new Date(letter.createdAt).toLocaleString()}
-            </div>
-          </div>
+       <div className="flex flex-wrap gap-2 mt-4 justify-center">
+        {moods.map((m) => (
+        <button
+        key={m}
+        onClick={() => setFilter(m)}
+        className={`px-3 py-1 rounded-full text-sm capitalize transition
+        ${filter === m
+        ? 'bg-pink-600 text-white'
+        : 'bg-pink-200 text-pink-800 hover:bg-pink-300'}`}
+        >
+        {m === 'all' ? '💌 All' : `${moodEmoji(m)} ${m}`}
+        </button>
         ))}
-      </div>
-    </div>
-  );
-}
+        </div>
+        </div>
 
-function moodEmoji(mood) {
-  const moodMap = {
-    flirty: '💋',
-    comforting: '☁️',
-    wholesome: '🌼',
-    playful: '😏',
-    tired: '😓',
-    exhausted: '😞',
-    emotional: '🥺',
-    mixed: '😔',
-  };
-  return moodMap[mood?.toLowerCase()] || '💌';
-}
+
+        {filteredLetters.map((letter) => (
+        <div
+        key={letter.id}
+        className="bg-white shadow-lg rounded-xl p-5 border-l-4 border-pink-300"
+        >
+        <div className="flex justify-between items-center mb-2">
+        <span className="text-sm text-gray-500 italic">
+        — {letter.author || 'Anonymous'}
+        </span>
+        <span className="text-xs bg-pink-200 text-pink-800 px-3 py-1 rounded-full capitalize">
+        {moodEmoji(letter.mood)} {letter.mood}
+        </span>
+        </div>
+
+
+        <p className="text-gray-800 whitespace-pre-wrap font-serif">
+        {letter.content}
+        </p>
+
+
+        <div className="text-right text-xs text-gray-400 mt-3">
+        {new Date(letter.createdAt).toLocaleString()}
+        </div>
+        </div>
+        ))}
+        </div>
+        </div>
+        );
+        }
+
+
+        function moodEmoji(mood) {
+        const moodMap = {
+        flirty: '💋',
+        comforting: '☁️',
+        wholesome: '🌼',
+        playful: '😏',
+        tired: '😓',
+        exhausted: '😞',
+        emotional: '🥺',
+        mixed: '😔',
+        };
+        return moodMap[mood?.toLowerCase()] || '💌';
+        }
