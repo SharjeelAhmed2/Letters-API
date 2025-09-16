@@ -1,8 +1,16 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import PostLetter from '../src/pages/PostLetter'
+import Home from './pages/Home';
+
+
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-pink-100 text-pink-900 text-xl font-semibold">
-      💌 Lila is online. First commit is alive.
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/post" element={<PostLetter />} />
+      </Routes>
+    </Router>
   );
 }
 
