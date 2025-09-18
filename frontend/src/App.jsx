@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import PostLetter from '../src/pages/PostLetter'
 import Home from './pages/Home';
 import AllLetters from './pages/AllLetters';
+import RandomLetter from './pages/RandomLetter';
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/post" element={<PostLetter />} />
         <Route path="/getLetters" element={<AllLetters />} />
+        <Route path="/random" element={<RandomLetter />} />
       </Routes>
     </Router>
   );

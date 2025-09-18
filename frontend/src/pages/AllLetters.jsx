@@ -8,6 +8,7 @@ export default function AllLetters() {
     const navigate = useNavigate();
         const goToSubmit = async () => {
       navigate('/post');
+      
     }
   useEffect(() => {
     fetch('http://localhost:8081/api/letters')
@@ -86,6 +87,13 @@ export default function AllLetters() {
         </div>
         </div>
         ))}
+
+        <button
+        onClick={() => navigate('/random')}// or use a prop/state toggle in parent
+        className="text-sm text-pink-600 hover:underline"
+        >
+        🎲 Random Letter
+        </button>
         </div>
         </div>
         );
