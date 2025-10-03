@@ -6,7 +6,7 @@ export default function RandomLetter() {
 
   const fetchRandom = () => {
     setLoading(true);
-    fetch('http://localhost:8080/api/letters/random')
+    fetch('http://localhost:8081/api/letters/random')
       .then((res) => {
         if (!res.ok) throw new Error('No letter found');
         return res.json();
